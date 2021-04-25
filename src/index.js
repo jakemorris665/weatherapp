@@ -20,7 +20,6 @@ async function getWeather() {
       { mode: "cors" }
     );
     weatherData = await response.json();
-    console.log(weatherData);
     let myData = processWeather(weatherData);
     displayWeather(myData);
     convertTemp(weatherData);
@@ -54,7 +53,6 @@ function processWeather(weatherData) {
 }
 
 function displayWeather(myData) {
-  console.log(myData.weather);
   if (myData.weather === "Clouds") {
     body.className = "bg bgClouds";
   } else if (myData.weather === "Clear") {
@@ -74,7 +72,6 @@ function displayWeather(myData) {
 }
 
 function convertTemp() {
-  console.log(weatherData);
   if (weatherData.main !== undefined) {
     if (units === "Metric") {
       temp.textContent =
