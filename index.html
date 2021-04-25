@@ -6,8 +6,19 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
-    <div class="red">HELLO</div>
+  <body class="bg bgDefault">
+    <h1 class="pageTitle">Weather!</h1>
+    <div class="searchWrapper">
+      <input type="text" id="search" class="search" />
+      <button class="getWeather" id="getWeather" type="submit">Try it</button>
+    </div>
+
+    <div class="weatherBox">
+      <div class="info" id="location"></div>
+      <div class="info" id="description"></div>
+      <div class="info" id="temp"></div>
+      <div class="info" id="wind"></div>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>

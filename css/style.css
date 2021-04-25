@@ -1,3 +1,70 @@
-.red {
-  color: red;
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.bg {
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.bgDefault {
+  background-image: url("../css/images/cloudDefault.jpg");
+}
+
+.bgThunder {
+  background-image: url("../css/images/thunder.jpg");
+}
+
+.bgRain {
+  background-image: url("../css/images/rain.jpg");
+}
+
+.bgSnow {
+  background-image: url("../css/images/snow.jpg");
+}
+
+.bgClouds {
+  background-image: url("../css/images/cloudy.jpg");
+}
+
+.bgClear {
+  background-image: url("../css/images/sunny.jpg");
+}
+
+.pageTitle {
+  font-size: 50pt;
+  margin: 30px;
+  background: whitesmoke;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.weatherBox {
+  width: 500px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.info {
+  width: 75%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: whitesmoke;
+  border-radius: 10px;
+  font-size: 18pt;
 }
