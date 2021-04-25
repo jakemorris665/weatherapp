@@ -5,22 +5,25 @@ const description = document.getElementById("description");
 const temp = document.getElementById("temp");
 const wind = document.getElementById("wind");
 const body = document.querySelector("body");
+const unitBtn = document.getElementById("units");
 
 let searchTerm;
 let weatherData;
+let units = "Metric";
 
 async function getWeather() {
   weatherBtn.disabled = true;
   searchTerm = searchBar.value;
   try {
     let response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=metric&APPID=5bc5b119aff6ffba91bc96547a288038`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&APPID=5bc5b119aff6ffba91bc96547a288038`,
       { mode: "cors" }
     );
     weatherData = await response.json();
     console.log(weatherData);
     let myData = processWeather(weatherData);
     displayWeather(myData);
+    convertTemp(weatherData);
     weatherBtn.disabled = false;
     searchBar.value = "";
   } catch (error) {
@@ -36,16 +39,18 @@ async function getWeather() {
 }
 
 function processWeather(weatherData) {
-  let myData = {
-    weather: weatherData.weather[0].main,
-    description: weatherData.weather[0].description,
-    temp: weatherData.main.temp,
-    tempFeel: weatherData.main.feels_like,
-    city: weatherData.name,
-    country: weatherData.sys.country,
-    wind: weatherData.wind.speed,
-  };
-  return myData;
+  if (weatherData.main !== undefined) {
+    let myData = {
+      weather: weatherData.weather[0].main,
+      description: weatherData.weather[0].description,
+      temp: weatherData.main.temp,
+      tempFeel: weatherData.main.feels_like,
+      city: weatherData.name,
+      country: weatherData.sys.country,
+      wind: weatherData.wind.speed,
+    };
+    return myData;
+  }
 }
 
 function displayWeather(myData) {
@@ -61,10 +66,45 @@ function displayWeather(myData) {
   } else if (myData.weather === "Snow") {
     body.className = "bg bgSnow";
   }
+
   description.textContent = myData.description;
   temp.textContent = myData.temp + " degrees C";
   place.textContent = `${myData.city}, ${myData.country}`;
-  wind.textContent = "Wind speed: " + myData.wind + " m/hr";
+  wind.textContent = "Wind speed: " + myData.wind + " m/s";
+}
+
+function convertTemp() {
+  console.log(weatherData);
+  if (weatherData.main !== undefined) {
+    if (units === "Metric") {
+      temp.textContent =
+        (weatherData.main.temp - 273.15).toFixed(1) + " degrees celcius";
+    } else {
+      temp.textContent =
+        ((weatherData.main.temp - 273.15) * (9 / 5) + 32).toFixed(1) +
+        " degrees farenheit";
+      wind.textContent =
+        "Wind speed: " + (weatherData.wind.speed * 2.237).toFixed(1) + " mi/hr";
+    }
+  }
+}
+
+function convertMetricWind() {
+  wind.textContent = "Wind speed: " + weatherData.wind.speed + " m/s";
+}
+
+function unitsButton() {
+  if (units === "Metric") {
+    unitBtn.textContent = "Metric";
+    units = "Imperial";
+    convertTemp();
+  } else if (units === "Imperial") {
+    unitBtn.textContent = "Imperial";
+    units = "Metric";
+    convertTemp();
+    convertMetricWind();
+  }
 }
 
 weatherBtn.addEventListener("click", getWeather);
+unitBtn.addEventListener("click", unitsButton);
